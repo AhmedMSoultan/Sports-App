@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="upComingCell" id="gTV-IL-0wX" customClass="UpComingCollectionViewCell" customModule="Sports_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="427" height="142"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="427" height="142"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upComingEvent" translatesAutoresizingMaskIntoConstraints="NO" id="spF-Q4-9T9">
+                        <rect key="frame" x="0.0" y="0.0" width="427" height="142"/>
+                    </imageView>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="spF-Q4-9T9" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="80J-2c-Opb"/>
+                <constraint firstItem="spF-Q4-9T9" firstAttribute="width" secondItem="ZTg-uK-7eu" secondAttribute="width" id="82q-mE-K33"/>
+                <constraint firstItem="spF-Q4-9T9" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="BOT-aa-17D"/>
+                <constraint firstItem="spF-Q4-9T9" firstAttribute="height" secondItem="ZTg-uK-7eu" secondAttribute="height" multiplier="2.21875" id="V9x-e2-MU5"/>
+                <constraint firstAttribute="trailing" secondItem="spF-Q4-9T9" secondAttribute="trailing" id="Woa-bZ-Vbl"/>
+                <constraint firstAttribute="bottom" secondItem="spF-Q4-9T9" secondAttribute="bottom" id="ztm-nM-qkg"/>
+            </constraints>
+            <size key="customSize" width="427" height="142"/>
+            <connections>
+                <outlet property="upComingImage" destination="spF-Q4-9T9" id="x1b-n6-BX2"/>
+            </connections>
+            <point key="canvasLocation" x="286.23188405797106" y="97.098214285714278"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="upComingEvent" width="1920" height="1080"/>
+    </resources>
+</document>
