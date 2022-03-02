@@ -8,39 +8,62 @@
 import UIKit
 
 class FavoritesTableViewController: UITableViewController {
-
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var favLeagues = [FavLeague]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        title = "Favorite Leagues"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.fetchData()
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return favLeagues.count
     }
+    
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "favoriteTeamCell", for: indexPath) as! FavoriteTableViewCell
+        cell.leagueName.text = favLeagues[indexPath.row].strLeague
+        cell.leagueImage.sd_setImage(with: URL(string: favLeagues[indexPath.row].strBadge!), placeholderImage: UIImage(named: "imageplaceholder"))
+        cell.youtubeURL = favLeagues[indexPath.row].strYoutube!
+        cell.selectionStyle = .none
         return cell
     }
-    */
-
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 150
+    }
+    
+    func fetchData(){
+        do{
+            favLeagues = try context.fetch(FavLeague.fetchRequest())
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }catch{
+            print(error.localizedDescription)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.deselectRow(at: indexPath, animated: false)
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -75,6 +98,8 @@ class FavoritesTableViewController: UITableViewController {
         return true
     }
     */
+    
+    
 
     /*
     // MARK: - Navigation

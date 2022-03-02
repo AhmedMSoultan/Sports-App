@@ -19,6 +19,8 @@ class SportsCollectionViewController: UICollectionViewController , UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Sports"
+        
         let indicator = UIActivityIndicatorView(style: .large)
         indicator.center = view.center
         indicator.color = .green

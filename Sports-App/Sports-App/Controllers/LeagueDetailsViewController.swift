@@ -8,6 +8,7 @@
 import UIKit
 import CloudKit
 import Alamofire
+import FavoriteButton
 
 class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource , UICollectionViewDelegate , UICollectionViewDelegateFlowLayout{
     
@@ -18,11 +19,13 @@ class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource
     var teams = [Team]()
     var selectedTeam = Team()
     var selectedClass: [String : [Event]]?
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     
     @IBOutlet weak var eventsCollection: UICollectionView!
     @IBOutlet weak var resultsCollection: UICollectionView!
     @IBOutlet weak var teamsCollection: UICollectionView!
+//    @IBOutlet weak var favBtn: FavoriteButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +33,19 @@ class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource
         self.getUpcomingEvents()
         self.getResults()
         self.getTeams()
+//        favBtn.delegate = self
+        
         
 //        print(selectedLeague.strLeague)
         // Do any additional setup after loading the view.
 //        eventsCollection.register(UINib(nibName: "UpComingCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "upComingCell")
     }
+    
+    @IBAction func favBtnAction(_ sender: Any) {
+        saveData()
+    }
+
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(collectionView == eventsCollection){
@@ -71,7 +82,6 @@ class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource
         }
     }
     
-
     
     
     func getUpcomingEvents(){
@@ -101,11 +111,7 @@ class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource
     
     
     func getResults(){
-    
-        
-//        guard let url = URL(string: "https://www.thesportsdb.com/api/v1/json/2/eventsseason.php?id=4328&s=2021-2022") else {return}
-//        leagueName = selectedLeague.strLeague?.replacingOccurrences(of: " ", with: "%20")
-//        print(leagueName!)
+  
         print(selectedLeague.idLeague!)
         guard let url = URL(string: "https://www.thesportsdb.com/api/v1/json/2/eventsseason.php?id=\(String(describing: selectedLeague.idLeague!))&s=2021-2022") else {return}
         print(url)
@@ -167,17 +173,7 @@ class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource
             
         }
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     // MARK: UICollectionViewDelegateFlowLayout
     
     
@@ -189,6 +185,18 @@ class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource
         }else{
             return CGSize(width: UIScreen.main.bounds.width*0.3, height: UIScreen.main.bounds.height)
         }
+    }
+    
+    //Save in Core Data
+    func saveData(){
+        let savedLeague = FavLeague(context: context)
+        savedLeague.idLeague = selectedLeague.idLeague
+        savedLeague.strLeague = selectedLeague.strLeague
+        savedLeague.strBadge = selectedLeague.strBadge
+        savedLeague.strPoster = selectedLeague.strPoster
+        savedLeague.strYoutube = selectedLeague.strYoutube
+        savedLeague.strDescriptionEN = selectedLeague.strDescriptionEN
+        try?context.save()
     }
 
 }

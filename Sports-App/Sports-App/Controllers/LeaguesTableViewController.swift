@@ -39,7 +39,8 @@ class LeaguesTableViewController: UITableViewController {
         leagueCell?.leagueImage.sd_setImage(with: URL(string: leagues[indexPath.row].strBadge!), placeholderImage: UIImage(named: "imageplaceholder"))
         leagueCell?.leagueLabel.text = leagues[indexPath.row].strLeague
         leagueCell?.layer.cornerRadius = 20
-        leagueCell?.youtubeURL = leagues[indexPath.row].strYoutube
+        leagueCell?.selectedLeague = leagues[indexPath.row]
+//        leagueCell?.youtubeURL = leagues[indexPath.row].strYoutube
         return leagueCell!
     }
     

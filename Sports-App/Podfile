@@ -9,5 +9,7 @@ pod 'Cosmos'
 pod 'ReachabilitySwift'
 pod 'Alamofire'
 pod 'SDWebImage'
+pod 'FavoriteButton'
+
 
 end
