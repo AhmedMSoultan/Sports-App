@@ -20,14 +20,13 @@ class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource
     var selectedClass: [String : [Event]]?
     
     
-    @IBOutlet weak var leagueLabel: UILabel!
     @IBOutlet weak var eventsCollection: UICollectionView!
     @IBOutlet weak var resultsCollection: UICollectionView!
     @IBOutlet weak var teamsCollection: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        leagueLabel.text = selectedLeague.strLeague
+        title = selectedLeague.strLeague
         self.getUpcomingEvents()
         self.getResults()
         self.getTeams()
@@ -54,10 +53,12 @@ class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource
         if(collectionView == eventsCollection){
             let eventCell = eventsCollection.dequeueReusableCell(withReuseIdentifier: "upComingEventCell", for: indexPath) as! EventCollectionViewCell
             eventCell.eventImage.sd_setImage(with: URL(string: upComingEvents[indexPath.row].strThumb ?? "imageplaceholder"), placeholderImage: UIImage(named: "imageplaceholder"))
+            eventCell.eventImage.layer.cornerRadius = 15
             return eventCell
         }else if (collectionView == resultsCollection){
             let resultCell = resultsCollection.dequeueReusableCell(withReuseIdentifier: "resultCell", for: indexPath) as! ResultCollectionViewCell
             resultCell.resultImage.sd_setImage(with: URL(string: results[indexPath.row].strThumb ?? "imageplaceholder"), placeholderImage: UIImage(named: "imageplaceholder"))
+            resultCell.resultImage.layer.cornerRadius = 20
             resultCell.resultScore.text = "\(String(describing: results[indexPath.row].strHomeTeam!))  \(String(describing: results[indexPath.row].intHomeScore!)) : \(String(describing: results[indexPath.row].intAwayScore!))  \(String(describing: results[indexPath.row].strAwayTeam!))"
             return resultCell
         }else if (collectionView == teamsCollection){
@@ -155,6 +156,7 @@ class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource
         if(collectionView == teamsCollection){
             selectedTeam = teams[indexPath.row]
             performSegue(withIdentifier: "showTeam", sender: self)
+           
         }
     }
     

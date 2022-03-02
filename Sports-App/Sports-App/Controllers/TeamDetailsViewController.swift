@@ -14,6 +14,10 @@ class TeamDetailsViewController: UIViewController {
     @IBOutlet weak var teamName: UILabel!
     @IBOutlet weak var teamBanner: UIImageView!
     @IBOutlet weak var teamJersey: UIImageView!
+    @IBOutlet weak var informedYearLabel: UILabel!
+    @IBOutlet weak var teamDesc: UITextView!
+    @IBOutlet weak var staduimLabel: UILabel!
+    @IBOutlet weak var staduimDesc: UITextView!
     
     var selectedTeam = Team()
     
@@ -24,18 +28,44 @@ class TeamDetailsViewController: UIViewController {
         teamBanner.sd_setImage(with: URL(string: selectedTeam.strTeamBanner ?? "liverpool_Banner"), placeholderImage: UIImage(named: "imageplaceholder"))
         teamJersey.sd_setImage(with: URL(string: selectedTeam.strTeamJersey ?? "liverpool_Jersey"), placeholderImage: UIImage(named: "imageplaceholder"))
         teamName.text = selectedTeam.strTeam
+        
+        informedYearLabel.text = selectedTeam.intFormedYear ?? ""
+        teamDesc.text = selectedTeam.strDescriptionEN ?? ""
+        staduimLabel.text = selectedTeam.strStadium ?? ""
+        staduimDesc.text = selectedTeam.strStadiumDescription ?? ""
+        
         // Do any additional setup after loading the view.
     }
     @IBAction func facebookBtnAction(_ sender: Any) {
+        let fullURL = "https://\(selectedTeam.strFacebook!)"
+        print(fullURL)
+        if let url = URL(string: fullURL){
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     @IBAction func instagramBtnAction(_ sender: Any) {
+        let fullURL = "https://\(selectedTeam.strInstagram!)"
+        print(fullURL)
+        if let url = URL(string: fullURL){
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     @IBAction func twitterBtnAction(_ sender: Any) {
+        let fullURL = "https://\(selectedTeam.strTwitter!)"
+        print(fullURL)
+        if let url = URL(string: fullURL){
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     @IBAction func websiteBtnAction(_ sender: Any) {
+        let fullURL = "https://\(selectedTeam.strWebsite!)"
+        print(fullURL)
+        if let url = URL(string: fullURL){
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
     }
     
     

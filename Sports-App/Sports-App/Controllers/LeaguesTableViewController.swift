@@ -9,19 +9,16 @@ import UIKit
 import Alamofire
 
 class LeaguesTableViewController: UITableViewController {
-
+    
+    
     var sport = Sports(idSport: "", strSport: "", strFormat: "", strSportThumb: "", strSportIconGreen: "", strSportDescription: "")
     var leagues : [Leagues] = []
     var selectedLeague=Leagues(idLeague: "", strLeague: "", strBadge: "", strPoster: "", strYoutube: "", strDescriptionEN: "")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.registerTableViewCells()
-//        print("LeaguesTableView")
-//        print(sport.strSport!)
+        title = sport.strSport
         self.getSportLeaguesData()
-        
-        
     }
 
     // MARK: - Table view data source
@@ -37,48 +34,36 @@ class LeaguesTableViewController: UITableViewController {
     }
 
     
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let leagueCell = tableView.dequeueReusableCell(withIdentifier: "leagueCell", for: indexPath)
-//        // Configure the cell...
-//        let leagueBadge:UIImageView =  leagueCell.viewWithTag(1) as! UIImageView
-//        leagueBadge.sd_setImage(with: URL(string: leagues[indexPath.row].strBadge!), placeholderImage: UIImage(named: "imageplaceholder"))
-//        let leagueStr:UILabel = leagueCell.viewWithTag(2) as! UILabel
-//        leagueStr.text = leagues[indexPath.row].strLeague
-//        leagueCell.layer.cornerRadius = 20
-//        return leagueCell
-//    }
-    
     override func tableView(_ tableView: UITableView,cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let leagueCell = tableView.dequeueReusableCell(withIdentifier: "leagueCell", for: indexPath) as? LeagueTableViewCell
         leagueCell?.leagueImage.sd_setImage(with: URL(string: leagues[indexPath.row].strBadge!), placeholderImage: UIImage(named: "imageplaceholder"))
         leagueCell?.leagueLabel.text = leagues[indexPath.row].strLeague
         leagueCell?.layer.cornerRadius = 20
+        leagueCell?.youtubeURL = leagues[indexPath.row].strYoutube
         return leagueCell!
     }
     
-//    private func registerTableViewCells() {
-//        let leagueCell = UINib(nibName: "LeagueTableViewCell",bundle: nil)
-//        self.tableView.register(leagueCell,forCellReuseIdentifier: "leagueCell")
-//    }
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedLeague = leagues[indexPath.row]
 //        print(leagues[indexPath.row])
-        performSegue(withIdentifier: "leagueDetailsVC", sender: self)
+        let leagueDetailsViewController = storyboard?.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as! LeagueDetailsViewController
+        leagueDetailsViewController.selectedLeague = selectedLeague
+        navigationController?.pushViewController(leagueDetailsViewController, animated: true)
+//        performSegue(withIdentifier: "leagueDetailsVC", sender: self)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "leagueDetailsVC"){
-            let leagueDetailsVC = segue.destination as! LeagueDetailsViewController
-            leagueDetailsVC.selectedLeague = selectedLeague
-            
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if(segue.identifier == "leagueDetailsVC"){
+//            let leagueDetailsVC = segue.destination as! LeagueDetailsViewController
+//            leagueDetailsVC.selectedLeague = selectedLeague
+//        }
+//    }
     
     
 
