@@ -42,6 +42,7 @@ class FavoritesTableViewController: UITableViewController {
         cell.leagueImage.sd_setImage(with: URL(string: favLeagues[indexPath.row].strBadge!), placeholderImage: UIImage(named: "imageplaceholder"))
         cell.youtubeURL = favLeagues[indexPath.row].strYoutube!
         cell.selectionStyle = .none
+        cell.layer.cornerRadius = 20
         return cell
     }
     
@@ -60,9 +61,10 @@ class FavoritesTableViewController: UITableViewController {
         }
     }
     
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: false)
     }
+    
     
     /*
     // Override to support conditional editing of the table view.
@@ -72,17 +74,28 @@ class FavoritesTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            context.delete(favLeagues[indexPath.row])
+            favLeagues.remove(at: indexPath.row)
+            saveData()
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+    
+    func saveData(){
+        do{
+            try context.save()
+        }catch{
+            print(error.localizedDescription)
+        }
+    }
+    
 
     /*
     // Override to support rearranging the table view.

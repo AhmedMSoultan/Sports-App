@@ -25,7 +25,6 @@ class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource
     @IBOutlet weak var eventsCollection: UICollectionView!
     @IBOutlet weak var resultsCollection: UICollectionView!
     @IBOutlet weak var teamsCollection: UICollectionView!
-//    @IBOutlet weak var favBtn: FavoriteButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +32,7 @@ class LeagueDetailsViewController: UIViewController , UICollectionViewDataSource
         self.getUpcomingEvents()
         self.getResults()
         self.getTeams()
-//        favBtn.delegate = self
-        
-        
-//        print(selectedLeague.strLeague)
-        // Do any additional setup after loading the view.
-//        eventsCollection.register(UINib(nibName: "UpComingCollectionViewCell", bundle: .main), forCellWithReuseIdentifier: "upComingCell")
+
     }
     
     @IBAction func favBtnAction(_ sender: Any) {
