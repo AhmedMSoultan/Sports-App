@@ -15,63 +15,46 @@ let reachability = try! Reachability()
 var sports:[Sports] = []
 
 class SportsCollectionViewController: UICollectionViewController , UICollectionViewDelegateFlowLayout{
-
+    
+    let indicator = UIActivityIndicatorView(style: .large)
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Sports"
-        
-        let indicator = UIActivityIndicatorView(style: .large)
         indicator.center = view.center
         indicator.color = .green
         self.view.addSubview(indicator)
         indicator.startAnimating()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        //Reachability
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+        
         reachability.whenReachable = { reachabilty in
                     if reachabilty.connection == .wifi {
                         print("Reachable via wifi")
                         self.getSportsData()
-//                        sports = NetworkManager.shared.getSportsData()
-//                        NetworkManager.shared.getSportsData()
-                        DispatchQueue.main.async {
-                            indicator.stopAnimating()
-                            self.collectionView.reloadData()
-                        }
                     } else {
                         print("Reachable via cellular")
+                        self.getSportsData()
                     }
                 }
                 reachability.whenUnreachable = { _ in
                     print("Not reachable")
                     DispatchQueue.main.async {
-//                        self.collectionView.reloadData()
-                        indicator.startAnimating()
+                        self.indicator.startAnimating()
                     }
                 }
-                do {
-                    try reachability.startNotifier()
-                } catch {
-                    print("Unable to start notifier")
-                }
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-//        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -88,13 +71,10 @@ class SportsCollectionViewController: UICollectionViewController , UICollectionV
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let sportCell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        // Configure the cell
-//        let url = URL(string: sports[indexPath.row].strSportThumb!)
         let sportImgView:UIImageView = sportCell.viewWithTag(1) as! UIImageView
         sportImgView.sd_setImage(with: URL(string: sports[indexPath.row].strSportIconGreen!), placeholderImage: UIImage(named: "imageplaceholder"))
         let sportLabel:UILabel = sportCell.viewWithTag(2) as! UILabel
         sportLabel.text = sports[indexPath.row].strSport
-//        sportImgView.layer.cornerRadius = 20
         return sportCell
     }
     
@@ -104,6 +84,7 @@ class SportsCollectionViewController: UICollectionViewController , UICollectionV
                 result in
                 switch result.result{
                 case .failure(_):
+                    self.indicator.startAnimating()
                     print("Error")
                 case .success(_):
                     guard let data = result.data else {return}
@@ -112,6 +93,7 @@ class SportsCollectionViewController: UICollectionViewController , UICollectionV
                     sports = json.sports!
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
+                        self.indicator.stopAnimating()
                     }
                 }
             }

@@ -40,7 +40,6 @@ class LeaguesTableViewController: UITableViewController {
         leagueCell?.leagueLabel.text = leagues[indexPath.row].strLeague
         leagueCell?.layer.cornerRadius = 20
         leagueCell?.selectedLeague = leagues[indexPath.row]
-//        leagueCell?.youtubeURL = leagues[indexPath.row].strYoutube
         return leagueCell!
     }
     
@@ -48,16 +47,39 @@ class LeaguesTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedLeague = leagues[indexPath.row]
-//        print(leagues[indexPath.row])
         let leagueDetailsViewController = storyboard?.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as! LeagueDetailsViewController
         leagueDetailsViewController.selectedLeague = selectedLeague
         navigationController?.pushViewController(leagueDetailsViewController, animated: true)
-//        performSegue(withIdentifier: "leagueDetailsVC", sender: self)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
     }
+    
+    func getSportLeaguesData(){
+//        guard let url = URL(string: "https://www.thesportsdb.com/api/v1/json/2/search_all_leagues.php?s=\(String(describing: sport.strSport!))") else {return}
+        guard let url = URL(string: "https://www.thesportsdb.com/api/v1/json/2/search_all_leagues.php?c=England&s=\(String(describing: sport.strSport!))") else {return}
+    
+            AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).response{
+                result in
+                switch result.result{
+                case .failure(_):
+                    print("Error")
+                case .success(_):
+                    guard let data = result.data else {return}
+                    
+                    let json = try? JSONDecoder().decode([String:[Leagues]]?.self, from:data)
+                    if let json = json{
+                        self.leagues = json["countrys"]!
+                    }
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+            
+        }
+    
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //        if(segue.identifier == "leagueDetailsVC"){
@@ -113,28 +135,6 @@ class LeaguesTableViewController: UITableViewController {
     }
     */
     
-    func getSportLeaguesData(){
-//        guard let url = URL(string: "https://www.thesportsdb.com/api/v1/json/2/search_all_leagues.php?s=\(String(describing: sport.strSport!))") else {return}
-        guard let url = URL(string: "https://www.thesportsdb.com/api/v1/json/2/search_all_leagues.php?c=England&s=\(String(describing: sport.strSport!))") else {return}
-    
-            AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: nil).response{
-                result in
-                switch result.result{
-                case .failure(_):
-                    print("Error")
-                case .success(_):
-                    guard let data = result.data else {return}
-                    
-                    let json = try? JSONDecoder().decode([String:[Leagues]]?.self, from:data)
-                    if let json = json{
-                        self.leagues = json["countrys"]!
-                    }
-                    DispatchQueue.main.async {
-                        self.tableView.reloadData()
-                    }
-                }
-            }
-            
-        }
+
 
 }
