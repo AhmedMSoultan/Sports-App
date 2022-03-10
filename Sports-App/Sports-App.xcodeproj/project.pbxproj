@@ -78,6 +78,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0A11086027D8B4670012715F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				0A11086127D8B4790012715F /* CoreData */,
+				0A551F7227CCFBAA00A77B35 /* Networking */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		0A11086127D8B4790012715F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				0AB6BDC927C6C4B30065C3AD /* Sports_App.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		0A11086227D8B4D10012715F /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				0AB6BDC027C6C4B30065C3AD /* AppDelegate.swift */,
+				0AB6BDC227C6C4B30065C3AD /* SceneDelegate.swift */,
+				0AB6BDCC27C6C4B40065C3AD /* Assets.xcassets */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		0A551F7227CCFBAA00A77B35 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,16 +134,11 @@
 		0AB6BDBF27C6C4B30065C3AD /* Sports-App */ = {
 			isa = PBXGroup;
 			children = (
-				0A551F7227CCFBAA00A77B35 /* Networking */,
+				0A11086227D8B4D10012715F /* Core */,
+				0A11086027D8B4670012715F /* Services */,
 				0AB6BDED27C7B4080065C3AD /* Models */,
 				0AB6BDEC27C7B4000065C3AD /* Views */,
 				0AB6BDEB27C7B3F20065C3AD /* Controllers */,
-				0AB6BDC927C6C4B30065C3AD /* Sports_App.xcdatamodeld */,
-				0AB6BDC027C6C4B30065C3AD /* AppDelegate.swift */,
-				0AB6BDC227C6C4B30065C3AD /* SceneDelegate.swift */,
-				0AB6BDCC27C6C4B40065C3AD /* Assets.xcassets */,
-				0AB6BDC627C6C4B30065C3AD /* Main.storyboard */,
-				0AB6BDCE27C6C4B40065C3AD /* LaunchScreen.storyboard */,
 				0AB6BDD127C6C4B40065C3AD /* Info.plist */,
 			);
 			path = "Sports-App";
@@ -137,6 +159,8 @@
 		0AB6BDEC27C7B4000065C3AD /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0AB6BDCE27C6C4B40065C3AD /* LaunchScreen.storyboard */,
+				0AB6BDC627C6C4B30065C3AD /* Main.storyboard */,
 				0AB6BDE727C6E74F0065C3AD /* SportCollectionViewCell.swift */,
 				0AB6BDF527C8C3AD0065C3AD /* LeagueTableViewCell.swift */,
 				0AB6BDE127C6E3440065C3AD /* EventCollectionViewCell.swift */,
